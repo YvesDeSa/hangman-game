@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import br.edu.iff.domain.ObjectDomainImplementation;
+import br.edu.iff.word_bank.domain.letter.Letter;
+import br.edu.iff.word_bank.domain.letter.LetterFactory;
 import br.edu.iff.word_bank.domain.theme.Theme;
 
 public class Word extends ObjectDomainImplementation {
@@ -43,7 +43,7 @@ public class Word extends ObjectDomainImplementation {
     this.words = new ArrayList<>();
 
     for (int i = 0; i < word.length(); i++) {
-      this.words.add(letterFactory.getLetter(words.chatAt(i)));
+      this.words.add(letterFactory.getLetter(words.get(i).getCode()));
     }
   }
 
