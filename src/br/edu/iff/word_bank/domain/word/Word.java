@@ -15,19 +15,19 @@ public class Word extends ObjectDomainImplementation {
   private List<Letter> words;
   private Theme theme;
 
-  public void setLetterFactory(LetterFactory factory) {
+  public static void setLetterFactory(LetterFactory factory) {
     letterFactory = factory;
   }
 
-  public LetterFactory getLetterFactory() {
+  public static LetterFactory getLetterFactory() {
     return letterFactory;
   }
 
-  public Word build(long id, String word, Theme theme) {
+  public static Word build(long id, String word, Theme theme) {
     return new Word(id, word, theme);
   }
 
-  public Word rebuild(long id, String word, Theme theme) {
+  public static Word rebuild(long id, String word, Theme theme) {
     return new Word(id, word, theme);
   }
 
