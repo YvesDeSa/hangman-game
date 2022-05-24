@@ -25,13 +25,14 @@ public class ThemeFactoryImplementation extends EntityFactory implements ThemeFa
     return (ThemeRepository) getRepository();
   }
 
+  @Override
   public Theme getTheme(String name) {
     Theme theme = Theme.build(getNextId(), name);
 
     try {
       getThemeRepository().insert(theme);
     } catch (RepositoryException exception) {
-      throw new RuntimeException("error saving theme");
+      throw new RuntimeException("Error saving theme");
     }
     return theme;
   }
