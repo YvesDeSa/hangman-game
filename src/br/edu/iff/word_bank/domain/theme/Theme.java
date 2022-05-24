@@ -6,11 +6,11 @@ public class Theme extends ObjectDomainImplementation {
 
   private String name;
 
-  public Theme build(long id, String name) {
+  public static Theme build(long id, String name) {
     return new Theme(id, name);
   }
 
-  public Theme rebuild(long id, String name) {
+  public static Theme rebuild(long id, String name) {
     return new Theme(id, name);
   }
 
