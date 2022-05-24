@@ -2,11 +2,11 @@ package br.edu.iff.word_bank.domain.letter;
 
 public abstract class LetterFactoryImplementation implements LetterFactory {
   private Letter[] pool;
-  private Letter encoberta;
+  private Letter hidden;
 
   protected LetterFactoryImplementation() {
     this.pool = new Letter[26];
-    this.encoberta = null;
+    this.hidden = null;
   }
 
   public final Letter getLetter(char code) {
@@ -22,10 +22,10 @@ public abstract class LetterFactoryImplementation implements LetterFactory {
   protected abstract Letter createLetter(char code);
 
   public final Letter getLetterFound() {
-    if (encoberta == null) {
+    if (hidden == null) {
       char code = '#';
-      this.encoberta = createLetter(code);
+      this.hidden = createLetter(code);
     }
-    return this.encoberta;
+    return this.hidden;
   }
 }
