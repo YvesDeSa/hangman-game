@@ -6,7 +6,7 @@ This application was completely developed following all the principles of Object
 
 <h2>Developed by</h2>
 <ul>
-  <li>Yves de Sá </li>
-  <li>Lucas Rangel </li>
+  <li>Yves de Sá Barbosa</li>
+  <li>Lucas Pereira Rangel </li>
 </ul>
 <hr>
