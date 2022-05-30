@@ -1,4 +1,4 @@
-package br.edu.iff.word_bank.domain.theme.in_relatinal_database;
+package br.edu.iff.word_bank.domain.theme.in_relational_database;
 
 import java.util.List;
 
