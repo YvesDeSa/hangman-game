@@ -1,4 +1,4 @@
-package br.edu.iff.hangman_game.domain.player.in_relarional_database;
+package br.edu.iff.hangman_game.domain.player.in_relational_database;
 
 import br.edu.iff.hangman_game.domain.player.Player;
 import br.edu.iff.hangman_game.domain.player.PlayerRepository;
