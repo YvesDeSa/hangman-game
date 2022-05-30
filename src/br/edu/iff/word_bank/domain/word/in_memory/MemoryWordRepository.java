@@ -56,7 +56,7 @@ public class MemoryWordRepository implements WordRepository {
   @Override
   public void insert(Word word) throws RepositoryException {
     if (words.contains(word))
-      throw new RepositoryException("");
+      throw new RepositoryException("This word has already been inserted");
 
     words.add(word);
   }
@@ -64,7 +64,7 @@ public class MemoryWordRepository implements WordRepository {
   @Override
   public void update(Word word) throws RepositoryException {
     if (!words.contains(word))
-      throw new RepositoryException("");
+      throw new RepositoryException("That word is not in the memo");
 
     words.remove(word);
     words.add(word);
@@ -73,7 +73,7 @@ public class MemoryWordRepository implements WordRepository {
   @Override
   public void remove(Word word) throws RepositoryException {
     if (!words.contains(word))
-      throw new RepositoryException("");
+      throw new RepositoryException("That word is not in the memo");
 
     words.remove(word);
   }
