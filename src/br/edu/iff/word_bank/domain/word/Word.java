@@ -62,6 +62,7 @@ public class Word extends ObjectDomainImplementation {
   }
 
   public void show(Object context, List<Boolean> positions) {
+
   }
 
   public List<Integer> tryLetter(char code) {
