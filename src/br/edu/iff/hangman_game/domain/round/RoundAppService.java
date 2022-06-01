@@ -1,5 +1,6 @@
 package br.edu.iff.hangman_game.domain.round;
 
+import br.edu.iff.hangman_game.PlayerNotFoundException;
 import br.edu.iff.hangman_game.domain.player.Player;
 import br.edu.iff.hangman_game.domain.player.PlayerRepository;
 import br.edu.iff.repository.RepositoryException;
@@ -35,7 +36,7 @@ public class RoundAppService {
     this.PlayerRepository = playerRepository;
   }
 
-  public Round newRound(long id) throws playerNaoEncontradoException {
+  public Round newRound(long id) throws PlayerNotFoundException {
 
     try {
       Player playerRepository = PlayerRepository.getById(id);
@@ -44,10 +45,10 @@ public class RoundAppService {
       System.out.print(e.getMessage());
     }
 
-    throw new playerNaoEncontradoException("Could not find player");
+    throw new PlayerNotFoundException("Could not find player");
   }
 
-  public Round newRound(String namePlayer) throws playerNaoEncontradoException {
+  public Round newRound(String namePlayer) throws PlayerNotFoundException {
 
     try {
       Player playerRepositor = PlayerRepository.getByName(namePlayer);
@@ -56,7 +57,7 @@ public class RoundAppService {
       System.out.print(e.getMessage());
     }
 
-    throw new playerNaoEncontradoException("Could not find player");
+    throw new PlayerNotFoundException("Could not find player");
   }
 
   public Round newRound(Player player) {
