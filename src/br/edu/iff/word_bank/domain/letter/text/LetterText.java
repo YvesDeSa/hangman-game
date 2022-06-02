@@ -9,8 +9,8 @@ public class LetterText extends Letter {
   }
 
   @Override
-  public void show(Object contexto) {
-    System.out.println(this.getCode());
+  public void show(Object context) {
+    System.out.print(this.getCode());
   }
 
 }

@@ -16,8 +16,8 @@ public class WordAppService {
     this.factory = WordFactory;
   }
 
-  public static void createSoleInstance(WordRepository palavraRepository, WordFactory palavraFactory) {
-    soleInstance = new WordAppService(palavraRepository, palavraFactory);
+  public static void createSoleInstance(WordRepository wordRepository, WordFactory wordFactory) {
+    soleInstance = new WordAppService(wordRepository, wordFactory);
   }
 
   public static WordAppService getSoleInstance() {

@@ -43,7 +43,7 @@ public class Word extends ObjectDomainImplementation {
     this.words = new ArrayList<>();
 
     for (int i = 0; i < word.length(); i++) {
-      this.words.add(letterFactory.getLetter(words.get(i).getCode()));
+      this.words.add(letterFactory.getLetter(word.charAt(i)));
     }
   }
 
@@ -62,7 +62,20 @@ public class Word extends ObjectDomainImplementation {
   }
 
   public void show(Object context, List<Boolean> positions) {
+    if (positions.size() != words.size()) {
+      throw new RuntimeException("Erro ao exibir palavra!");
+    }
 
+    LetterFactory letterFactory = getLetterFactory();
+    Letter letterEncoberta = letterFactory.getLetterFound();
+
+    for (int i = 0; i < words.size(); i++) {
+      if (positions.get(i)) {
+        words.get(i).show(null);
+      } else {
+        letterEncoberta.show(null);
+      }
+    }
   }
 
   public List<Integer> tryLetter(char code) {

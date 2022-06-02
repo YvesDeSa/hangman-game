@@ -12,7 +12,7 @@ public abstract class Letter {
     return code;
   }
 
-  public abstract void show(Object contexto);
+  public abstract void show(Object context);
 
   @Override
   public boolean equals(Object o) {

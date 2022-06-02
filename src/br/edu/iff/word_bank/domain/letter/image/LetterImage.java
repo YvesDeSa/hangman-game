@@ -8,6 +8,6 @@ public class LetterImage extends Letter {
   }
 
   @Override
-  public void show(Object contexto) {
+  public void show(Object context) {
   }
 }
