@@ -59,15 +59,10 @@ public class HangmanGame {
     scanner.close();
   }
 
-  private static void start(Player player, Round round) throws InterruptedException, IOException {
+  private static void start(Player player, Round round) {
     Scanner scanner = new Scanner(System.in);
 
     while (!round.closed()) {
-      if (System.getProperty("os.name").contains("Windows"))
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-      else
-        Runtime.getRuntime().exec("clear");
-
       System.out.println("Jogador: " + player.getName());
       System.out.println("Tema: " + round.getTheme().getName());
 

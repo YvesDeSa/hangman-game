@@ -116,7 +116,7 @@ public class Item extends ObjectDomainImplementation {
 
   public boolean gotItRight() {
     if (risked())
-      word.compare(riskWord);
+      return word.compare(riskWord);
 
     return false;
   }

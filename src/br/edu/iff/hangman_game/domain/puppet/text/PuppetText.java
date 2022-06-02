@@ -36,7 +36,7 @@ public class PuppetText implements Puppet {
       System.out.println(body[i]);
 
       if (i != components - 1)
-        System.out.println(", ");
+        System.out.println(" ");
 
     }
     System.out.println();
