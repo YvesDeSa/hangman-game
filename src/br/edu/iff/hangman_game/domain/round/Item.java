@@ -13,11 +13,11 @@ public class Item extends ObjectDomainImplementation {
   private String riskWord = null;
   private Word word;
 
-  Item build(int id, Word word) {
+  static Item build(int id, Word word) {
     return new Item(id, word);
   }
 
-  public Item rebuild(int id, Word word, List<Boolean> uncoveredPosition, String riskWord) {
+  public static Item rebuild(int id, Word word, List<Boolean> uncoveredPosition, String riskWord) {
     return new Item(id, word, uncoveredPosition, riskWord);
   }
 

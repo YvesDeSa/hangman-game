@@ -1,12 +1,19 @@
 package br.edu.iff.hangman_game.domain.round;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import br.edu.iff.domain.ObjectDomainImplementation;
 import br.edu.iff.hangman_game.domain.player.Player;
+import br.edu.iff.hangman_game.domain.puppet.Puppet;
 import br.edu.iff.hangman_game.domain.puppet.PuppetFactory;
 import br.edu.iff.word_bank.domain.letter.Letter;
+import br.edu.iff.word_bank.domain.letter.LetterFactory;
 import br.edu.iff.word_bank.domain.theme.Theme;
 import br.edu.iff.word_bank.domain.word.Word;
 
@@ -19,7 +26,12 @@ public class Round extends ObjectDomainImplementation {
 
   private static PuppetFactory puppetFactory;
   private Player player;
-  private Theme theme;
+  private Puppet puppet;
+
+  private List<Item> items;
+
+  private Set<Letter> rightLetters;
+  private Set<Letter> wrongLetters;
 
   public static int getMaximumWord() {
     return maximumWord;
@@ -65,16 +77,47 @@ public class Round extends ObjectDomainImplementation {
     return new Round(id, words, player);
   }
 
-  public static Round rebuild(long id, List<Word> words, List<Letter> incorrect, Player player) {
-    return new Round(id, words, incorrect, player);
+  public static Round rebuild(long id, List<Item> items, List<Letter> incorrectList, Player player) {
+    return new Round(id, items, incorrectList, player);
   }
 
   private Round(long id, List<Word> words, Player player) {
     super(id);
+
+    puppet = getPuppetFactory().getPuppet();
+
+    this.player = player;
+    this.rightLetters = new HashSet<Letter>();
+    this.wrongLetters = new HashSet<Letter>();
+    this.items = new ArrayList<Item>(words.size());
+
+    for (int i = 0; i < words.size(); i++) {
+      this.items.add(Item.build(i, words.get(i)));
+    }
+
   }
 
-  private Round(long id, List<Word> words, List<Letter> incorrect, Player player) {
+  private Round(long id, List<Item> items, List<Letter> incorrectList, Player player) {
     super(id);
+
+    puppet = getPuppetFactory().getPuppet();
+
+    this.player = player;
+    this.rightLetters = new HashSet<Letter>();
+    this.wrongLetters = new HashSet<Letter>();
+    this.items = new ArrayList<Item>(items.size());
+
+    for (int i = 0; i < items.size(); i++) {
+      this.items.add(items.get(i));
+
+      for (Letter correct : this.items.get(i).getUncoveredLetters()) {
+        this.rightLetters.add(correct);
+      }
+    }
+
+    for (Letter incorrect : incorrectList) {
+      this.wrongLetters.add(incorrect);
+    }
   }
 
   public Player getPlayer() {
@@ -83,79 +126,146 @@ public class Round extends ObjectDomainImplementation {
   }
 
   public Theme getTheme() {
-    Theme theme = this.theme;
+    Theme theme = this.items.get(0).getWord().getTheme();
     return theme;
   }
 
   public List<Word> getWords() {
-    return null;
+    List<Word> words = new ArrayList<>();
+
+    for (Item item : items) {
+      words.add(item.getWord());
+    }
+
+    return words;
   }
 
   public int numberWords() {
-    return 0;
+    return items.size();
   }
 
-  public void tryLetter() {
+  public void tryLetter(char code) {
+    Map<Item, Boolean> rightItems = new HashMap<>();
+    LetterFactory letterFactory = Word.getLetterFactory();
+
+    for (Item item : items) {
+      if (item.tryLetter(code)) {
+        rightLetters.add(letterFactory.getLetter(code));
+        rightItems.put(item, true);
+      } else {
+        rightItems.put(item, false);
+      }
+    }
+
+    if (!rightItems.containsValue(true)) {
+      wrongLetters.add(letterFactory.getLetter(code));
+    }
+
+    if (closed())
+      this.player.setScore(calculateStore());
+  }
+
+  public void kick(List<String> words) {
+    for (int i = 0; i < words.size(); i++) {
+      items.get(i).takeRisk(words.get(i));
+    }
+
+    if (closed())
+      this.player.setScore(calculateStore());
   }
 
   public void showItems(Object context) {
-
+    for (Item item : items) {
+      item.show(context);
+      System.out.println();
+    }
   }
 
   public void showPuppet(Object context) {
-
+    puppet.show(context, getQuantityOfWrong());
   }
 
   public void showWords(Object context) {
-
+    for (Word word : getWords()) {
+      word.show(context);
+      System.out.println();
+    }
   }
 
   public void showWrongLetters(Object context) {
-
+    for (Letter wrongLetter : getWrong()) {
+      wrongLetter.show(context);
+      System.out.println();
+    }
   }
 
   public Set<Letter> getAttempts() {
-    return null;
+    Set<Letter> attemptsLetters = new HashSet<>();
+
+    attemptsLetters.addAll(rightLetters);
+    attemptsLetters.addAll(wrongLetters);
+
+    return attemptsLetters;
   }
 
   public Set<Letter> getRight() {
-    return null;
+    return Collections.unmodifiableSet(rightLetters);
   }
 
   public Set<Letter> getWrong() {
-    return null;
+    return Collections.unmodifiableSet(wrongLetters);
   }
 
   public int calculateStore() {
-    return 1;
+    if (!discovered())
+      return 0;
+
+    int score = getPointsWhenFiguringOutAllTheWords();
+
+    for (Item item : items) {
+      score += item.calculatePointsLettersFindings(getPointsByCovertLetters());
+    }
+
+    return score;
   }
 
   public boolean closed() {
+    if (getQuantityOfRemainingAttempts() == 0 || discovered() || risked())
+      return true;
+
     return false;
   }
 
   public boolean discovered() {
+    for (Item item : items) {
+      if (!item.discovered())
+        return false;
+    }
     return true;
   }
 
   public boolean risked() {
+    for (Item item : items) {
+      if (item.risked())
+        return true;
+    }
     return false;
   }
 
   public int getQuantityOfRemainingAttempts() {
-    return 0;
+    return getMaximumErrors() - wrongLetters.size();
   }
 
   public int getQuantityOfWrong() {
-    return 0;
+    return wrongLetters.size();
   }
 
   public int getQuantityOfRight() {
-    return 0;
+    return rightLetters.size();
   }
 
   public int getQuantityOfAttempts() {
-    return 0;
+    return getQuantityOfRight() + getQuantityOfWrong();
   }
 
 }
