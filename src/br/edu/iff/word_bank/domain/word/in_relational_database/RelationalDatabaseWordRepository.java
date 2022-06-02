@@ -23,49 +23,41 @@ public class RelationalDatabaseWordRepository implements WordRepository {
 
   @Override
   public long getNextId() {
-    // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
   public Word getById(long id) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public List<Word> getByTheme(Theme theme) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public List<Word> getAll() {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public Word getWord(String word) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public void insert(Word word) throws RepositoryException {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   public void update(Word word) throws RepositoryException {
-    // TODO Auto-generated method stub
 
   }
 
   @Override
   public void remove(Word word) throws RepositoryException {
-    // TODO Auto-generated method stub
 
   }
 }
