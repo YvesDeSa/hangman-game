@@ -8,11 +8,9 @@ Este projeto foi construído para aplicar na prática os conceitos fundamentais 
 
 ## 🚀 Tecnologias Utilizadas
 
-* 
+
 **Linguagem:** Java (100% do projeto) 
-* 
 **Paradigma:** Programação Orientada a Objetos 
-* 
 **Gerenciamento do Projeto:** Estrutura baseada em IDEs tradicionais do ecossistema Java (contém arquivos `.project` e `.classpath` ).
 
 ## ⚙️ Como Executar
